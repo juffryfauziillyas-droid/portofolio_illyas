@@ -137,7 +137,7 @@ function App() {
           });
           await readApiResponse(response, "Lokasi belum berhasil disimpan.");
           setLocationState("success");
-          setLocationMessage("Terima kasih, lokasi perkiraan berhasil dibagikan.");
+          setLocationMessage("");
         } catch (error) {
           console.error("Failed to save visitor location:", error);
           setLocationState("error");
