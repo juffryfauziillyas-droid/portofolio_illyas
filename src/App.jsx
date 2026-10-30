@@ -99,6 +99,11 @@ function App() {
   const [commentsState, setCommentsState] = useState("loading");
   const [commentFormState, setCommentFormState] = useState("idle");
   const [commentFormMessage, setCommentFormMessage] = useState("");
+  const [commentConsents, setCommentConsents] = useState({
+    publish: false,
+    hideWhatsapp: false,
+    anonymous: false,
+  });
 
   useEffect(() => {
     let active = true;
@@ -221,10 +226,29 @@ function App() {
       setCommentFormState("success");
       setCommentFormMessage("Terima kasih, komentarmu berhasil ditampilkan.");
       form.reset();
+      setCommentConsents({
+        publish: false,
+        hideWhatsapp: false,
+        anonymous: false,
+      });
     } catch (error) {
       console.error("Failed to submit reader comment:", error);
       setCommentFormState("error");
       setCommentFormMessage("Komentar belum berhasil dikirim. Silakan coba lagi.");
+    }
+  }
+
+  function handleCommentConsentChange(event) {
+    const { name, checked } = event.target;
+    const consentNames = {
+      "publish-consent": "publish",
+      "hide-whatsapp": "hideWhatsapp",
+      "share-location": "anonymous",
+    };
+    const consent = consentNames[name];
+
+    if (consent) {
+      setCommentConsents((current) => ({ ...current, [consent]: checked }));
     }
   }
 
@@ -396,6 +420,7 @@ function App() {
             <form
               className="reader-comment-form"
               onSubmit={handleCommentSubmit}
+              onChange={handleCommentConsentChange}
             >
               <h2>
                 Tinggalkan <span>pesan.</span>
@@ -436,17 +461,31 @@ function App() {
                 />
               </label>
               <label className="publish-consent">
-                <input name="publish-consent" type="checkbox" required />
+                <input
+                  name="publish-consent"
+                  type="checkbox"
+                  required
+                  checked={commentConsents.publish}
+                />
                 <span>
                   Saya setuju komentar ini ditampilkan secara publik.
                 </span>
               </label>
               <label className="publish-consent">
-                <input name="hide-whatsapp" type="checkbox" />
+                <input
+                  name="hide-whatsapp"
+                  type="checkbox"
+                  checked={commentConsents.hideWhatsapp}
+                />
                 <span>Jangan Tampilkan Nomor WhatssApp Saya.</span>
               </label>
               <label className="publish-consent">
-                <input name="share-location" type="checkbox" required />
+                <input
+                  name="share-location"
+                  type="checkbox"
+                  required
+                  checked={commentConsents.anonymous}
+                />
                 <span>
                   Sembunyikan Nama saya (anonymus)
                 </span>
@@ -454,7 +493,12 @@ function App() {
               <button
                 className="button button-primary form-submit"
                 type="submit"
-                disabled={commentFormState === "sending"}
+                disabled={
+                  commentFormState === "sending" ||
+                  !commentConsents.publish ||
+                  !commentConsents.hideWhatsapp ||
+                  !commentConsents.anonymous
+                }
               >
                 {commentFormState === "sending"
                   ? "Mengirim..."
