@@ -63,6 +63,21 @@ function SectionLabel({ number, children }) {
   );
 }
 
+async function readApiResponse(response, fallbackMessage) {
+  let result;
+  try {
+    result = await response.json();
+  } catch {
+    throw new Error(`${fallbackMessage} (HTTP ${response.status})`);
+  }
+
+  if (!response.ok) {
+    throw new Error(result.error || `${fallbackMessage} (HTTP ${response.status})`);
+  }
+
+  return result;
+}
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [formState, setFormState] = useState("idle");
@@ -80,10 +95,7 @@ function App() {
     async function loadComments() {
       try {
         const response = await fetch("/api/comments");
-        const result = await response.json();
-        if (!response.ok) {
-          throw new Error(result.error || "Komentar belum berhasil dimuat.");
-        }
+        const result = await readApiResponse(response, "Komentar belum berhasil dimuat.");
         if (active) {
           setComments(result.comments);
           setCommentsState("loaded");
@@ -123,10 +135,7 @@ function App() {
               consent: true,
             }),
           });
-          const result = await response.json();
-          if (!response.ok) {
-            throw new Error(result.error || "Lokasi belum berhasil disimpan.");
-          }
+          await readApiResponse(response, "Lokasi belum berhasil disimpan.");
           setLocationState("success");
           setLocationMessage("Terima kasih, lokasi perkiraan berhasil dibagikan.");
         } catch (error) {
@@ -163,11 +172,7 @@ function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || "Pesan belum berhasil dikirim.");
-      }
+      await readApiResponse(response, "Pesan belum berhasil dikirim.");
 
       setFormState("success");
       setFormMessage("Terima kasih! Pesanmu sudah terkirim.");
@@ -198,10 +203,7 @@ function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error(result.error || "Komentar belum berhasil dikirim.");
-      }
+      const result = await readApiResponse(response, "Komentar belum berhasil dikirim.");
 
       setComments((current) => [result.comment, ...current].slice(0, 50));
       setCommentsState("loaded");
