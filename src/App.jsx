@@ -227,7 +227,12 @@ function App() {
   return (
     <div className="site-shell">
       <header className="site-header">
-        <a className="wordmark" href="#home" aria-label="Ilyas, ke beranda" onClick={closeMenu}>
+        <a
+          className="wordmark"
+          href="#home"
+          aria-label="Ilyas, ke beranda"
+          onClick={closeMenu}
+        >
           illyas<span>®</span>
         </a>
         <button
@@ -239,10 +244,19 @@ function App() {
         >
           {menuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
-        <nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="Navigasi utama">
-          <a href="#tentang" onClick={closeMenu}>Tentang</a>
-          <a href="#karya" onClick={closeMenu}>Karya</a>
-          <a href="#kontak" onClick={closeMenu}>Kontak</a>
+        <nav
+          className={menuOpen ? "main-nav is-open" : "main-nav"}
+          aria-label="Navigasi utama"
+        >
+          <a href="#tentang" onClick={closeMenu}>
+            Tentang
+          </a>
+          <a href="#karya" onClick={closeMenu}>
+            Karya
+          </a>
+          <a href="#kontak" onClick={closeMenu}>
+            Kontak
+          </a>
         </nav>
         <a className="availability" href="#kontak">
           <span className="availability-dot" />
@@ -268,8 +282,8 @@ function App() {
               dibuat <span className="accent-text">jadi nyata.</span>
             </motion.h1>
             <motion.p className="hero-description" variants={reveal}>
-              Saya seorang developer yang senang merancang dan membangun pengalaman digital yang
-              terasa sederhana, berguna, dan berkesan.
+              Saya seorang developer yang senang merancang dan membangun
+              pengalaman digital yang terasa sederhana, berguna, dan berkesan.
             </motion.p>
             <motion.div className="hero-actions" variants={reveal}>
               <a className="button button-primary" href="#karya">
@@ -285,15 +299,25 @@ function App() {
             className="hero-art"
             initial={{ opacity: 0, scale: 0.92, rotate: 3 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: 0.9,
+              delay: 0.25,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             aria-label="Ilustrasi abstrak berbentuk matahari"
             role="img"
           >
             <div className="art-grid" />
             <div className="art-orbit orbit-one" />
             <div className="art-orbit orbit-two" />
-            <div className="art-sun"><span /></div>
-            <span className="art-caption">DESIGN<br />MEETS CODE</span>
+            <div className="art-sun">
+              <span />
+            </div>
+            <span className="art-caption">
+              DESIGN
+              <br />
+              MEETS CODE
+            </span>
             <span className="art-index">FIG. 001 — 2025</span>
             <span className="art-sparkle sparkle-one">✳</span>
             <span className="art-sparkle sparkle-two">✳</span>
@@ -325,14 +349,15 @@ function App() {
               variants={reveal}
             >
               <p>
-                Buat saya, teknologi terbaik bukan yang paling rumit—melainkan yang membantu
-                kehidupan sehari-hari terasa lebih mudah. Saya menikmati proses mengubah ide
-                menjadi produk digital yang dipikirkan dengan baik, dari tampilan sampai cara
-                kerjanya.
+                Buat saya, teknologi terbaik bukan yang paling rumit—melainkan
+                yang membantu kehidupan sehari-hari terasa lebih mudah. Saya
+                menikmati proses mengubah ide menjadi produk digital yang
+                dipikirkan dengan baik, dari tampilan sampai cara kerjanya.
               </p>
               <p>
-                Saat ini saya terus belajar, bereksperimen dengan teknologi web, dan terbuka untuk
-                bertemu orang-orang yang ingin membuat sesuatu yang berdampak.
+                Saat ini saya terus belajar, bereksperimen dengan teknologi web,
+                dan terbuka untuk bertemu orang-orang yang ingin membuat sesuatu
+                yang berdampak.
               </p>
               <a className="text-link" href="#kontak">
                 Ceritakan idemu <ArrowRight size={15} />
@@ -342,19 +367,31 @@ function App() {
           <div className="skills-row">
             <span className="skills-title">YANG SAYA GUNAKAN</span>
             <div className="skill-list">
-              {skills.map((skill) => <span className="skill-chip" key={skill}>{skill}</span>)}
+              {skills.map((skill) => (
+                <span className="skill-chip" key={skill}>
+                  {skill}
+                </span>
+              ))}
             </div>
           </div>
         </section>
 
-        <section className="reader-feedback section-wrap section-spacing" id="komentar">
+        <section
+          className="reader-feedback section-wrap section-spacing"
+          id="komentar"
+        >
           <div className="reader-feedback-heading">
             <SectionLabel number="02">SUARA PEMBACA</SectionLabel>
             <p>Punya saran atau komentar? Saya senang mendengarnya.</p>
           </div>
           <div className="reader-feedback-grid">
-            <form className="reader-comment-form" onSubmit={handleCommentSubmit}>
-              <h2>Tinggalkan <span>pesan.</span></h2>
+            <form
+              className="reader-comment-form"
+              onSubmit={handleCommentSubmit}
+            >
+              <h2>
+                Tinggalkan <span>pesan.</span>
+              </h2>
               <label>
                 Nama
                 <input
@@ -393,20 +430,20 @@ function App() {
               <label className="publish-consent">
                 <input name="publish-consent" type="checkbox" required />
                 <span>
-                  Saya setuju nama dan komentar ini ditampilkan secara publik. Nomor WhatsApp
-                  hanya untuk keperluan kontak dan tidak akan ditampilkan.
+                  Saya setuju nama dan komentar ini ditampilkan secara publik.
                 </span>
               </label>
               <label className="publish-consent">
                 <input name="share-location" type="checkbox" />
                 <span>
-                  Saya bersedia membagikan lokasi perkiraan untuk statistik pengunjung (opsional).
-                  Prompt izin browser akan muncul saat komentar dikirim; komentar tetap dikirim
-                  jika saya menolak.
+                  Jangan Tampilkan Nomor WhatssApp Saya.
                 </span>
               </label>
               {locationMessage && (
-                <p className={`form-feedback location-feedback ${locationState}`} aria-live="polite">
+                <p
+                  className={`form-feedback location-feedback ${locationState}`}
+                  aria-live="polite"
+                >
                   {locationMessage}
                 </p>
               )}
@@ -415,10 +452,15 @@ function App() {
                 type="submit"
                 disabled={commentFormState === "sending"}
               >
-                {commentFormState === "sending" ? "Mengirim..." : "Kirim komentar"}
+                {commentFormState === "sending"
+                  ? "Mengirim..."
+                  : "Kirim komentar"}
                 <ArrowUpRight size={17} />
               </button>
-              <p className={`form-feedback ${commentFormState}`} aria-live="polite">
+              <p
+                className={`form-feedback ${commentFormState}`}
+                aria-live="polite"
+              >
                 {commentFormMessage}
               </p>
             </form>
@@ -432,16 +474,22 @@ function App() {
                 <p className="comments-empty">Memuat komentar...</p>
               )}
               {commentsState === "error" && (
-                <p className="comments-empty">Komentar belum bisa dimuat. Coba muat ulang halaman.</p>
+                <p className="comments-empty">
+                  Komentar belum bisa dimuat. Coba muat ulang halaman.
+                </p>
               )}
               {commentsState === "loaded" && comments.length === 0 && (
-                <p className="comments-empty">Belum ada komentar. Jadilah yang pertama berbagi saran.</p>
+                <p className="comments-empty">
+                  Belum ada komentar. Jadilah yang pertama berbagi saran.
+                </p>
               )}
               {commentsState === "loaded" && comments.length > 0 && (
                 <div className="reader-comments-list">
                   {comments.map((comment) => (
                     <article className="reader-comment" key={comment.id}>
-                      <span className="comment-quote" aria-hidden="true">“</span>
+                      <span className="comment-quote" aria-hidden="true">
+                        “
+                      </span>
                       <p>{comment.comment}</p>
                       <div className="comment-author">
                         <span className="comment-avatar" aria-hidden="true">
@@ -450,11 +498,14 @@ function App() {
                         <div>
                           <h3>{comment.name}</h3>
                           <time dateTime={comment.created_at}>
-                            {new Date(comment.created_at).toLocaleDateString("id-ID", {
-                              day: "numeric",
-                              month: "short",
-                              year: "numeric",
-                            })}
+                            {new Date(comment.created_at).toLocaleDateString(
+                              "id-ID",
+                              {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                              },
+                            )}
                           </time>
                         </div>
                       </div>
@@ -483,7 +534,9 @@ function App() {
               >
                 <div className={`project-visual ${project.visual}`}>
                   <span className="project-mark">{project.mark}</span>
-                  <span className="project-visual-note">{project.number} / SELECTED WORK</span>
+                  <span className="project-visual-note">
+                    {project.number} / SELECTED WORK
+                  </span>
                   <span className="project-orb" />
                 </div>
                 <div className="project-info">
@@ -496,18 +549,22 @@ function App() {
                       <h3>{project.title}</h3>
                       <p>{project.description}</p>
                     </div>
-                    <span className="project-arrow" aria-hidden="true"><MoveUpRight size={20} /></span>
+                    <span className="project-arrow" aria-hidden="true">
+                      <MoveUpRight size={20} />
+                    </span>
                   </div>
                   <div className="project-tags">
-                    {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
+                    {project.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
                   </div>
                 </div>
               </motion.article>
             ))}
           </div>
           <p className="projects-note">
-            <span>✳</span> Proyek-proyek di atas adalah contoh yang bisa kamu sesuaikan dengan
-            karyamu sendiri.
+            <span>✳</span> Proyek-proyek di atas adalah contoh yang bisa kamu
+            sesuaikan dengan karyamu sendiri.
           </p>
         </section>
 
@@ -515,22 +572,39 @@ function App() {
           <SectionLabel number="04">PUNYA IDE MENARIK?</SectionLabel>
           <div className="contact-grid">
             <div className="contact-copy">
-              <h2>Mari buat sesuatu yang <span>berarti.</span></h2>
+              <h2>
+                Mari buat sesuatu yang <span>berarti.</span>
+              </h2>
               <p>
-                Ada proyek, pertanyaan, atau sekadar ingin menyapa? Kotak masuk saya selalu
-                terbuka.
+                Ada proyek, pertanyaan, atau sekadar ingin menyapa? Kotak masuk
+                saya selalu terbuka.
               </p>
               <a className="contact-email" href="mailto:halo@illyas.dev">
                 halo@illyas.dev <ArrowUpRight size={17} />
               </a>
               <div className="social-links" aria-label="Media sosial">
-                <a href="https://github.com/" target="_blank" rel="noreferrer" aria-label="GitHub">
+                <a
+                  href="https://github.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="GitHub"
+                >
                   <Github size={17} />
                 </a>
-                <a href="https://linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <a
+                  href="https://linkedin.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="LinkedIn"
+                >
                   <Linkedin size={17} />
                 </a>
-                <a href="https://instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">
+                <a
+                  href="https://instagram.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram"
+                >
                   <Instagram size={17} />
                 </a>
               </div>
@@ -538,30 +612,63 @@ function App() {
             <form className="contact-form" onSubmit={handleSubmit}>
               <label>
                 Nama
-                <input name="name" type="text" placeholder="Nama kamu" autoComplete="name" required maxLength={100} />
+                <input
+                  name="name"
+                  type="text"
+                  placeholder="Nama kamu"
+                  autoComplete="name"
+                  required
+                  maxLength={100}
+                />
               </label>
               <label>
                 Email
-                <input name="email" type="email" placeholder="nama@email.com" autoComplete="email" required maxLength={254} />
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="nama@email.com"
+                  autoComplete="email"
+                  required
+                  maxLength={254}
+                />
               </label>
               <label>
                 Pesan
-                <textarea name="message" rows="4" placeholder="Ceritakan sedikit tentang idemu..." required maxLength={5000} />
+                <textarea
+                  name="message"
+                  rows="4"
+                  placeholder="Ceritakan sedikit tentang idemu..."
+                  required
+                  maxLength={5000}
+                />
               </label>
-              <button className="button button-primary form-submit" type="submit" disabled={formState === "sending"}>
+              <button
+                className="button button-primary form-submit"
+                type="submit"
+                disabled={formState === "sending"}
+              >
                 {formState === "sending" ? "Mengirim..." : "Kirim pesan"}
                 <ArrowUpRight size={17} />
               </button>
-              <p className={`form-feedback ${formState}`} aria-live="polite">{formMessage}</p>
+              <p className={`form-feedback ${formState}`} aria-live="polite">
+                {formMessage}
+              </p>
             </form>
           </div>
         </section>
       </main>
 
       <footer className="site-footer section-wrap">
-        <a className="wordmark" href="#home">illyas<span>®</span></a>
-        <p>Dibuat dengan rasa ingin tahu <span>✳</span> © {new Date().getFullYear()} Ilyas</p>
-        <a className="back-top" href="#home">Kembali ke atas <ArrowUpRight size={14} /></a>
+        <a className="wordmark" href="#home">
+          illyas<span>®</span>
+        </a>
+        <p>
+          Dibuat dengan rasa ingin tahu <span>✳</span> ©{" "}
+          {new Date().getFullYear()} Ilyas
+        </p>
+        <a className="back-top" href="#home">
+          Kembali ke atas <ArrowUpRight size={14} />
+        </a>
       </footer>
     </div>
   );
