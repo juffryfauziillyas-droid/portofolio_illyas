@@ -438,7 +438,7 @@ function App() {
               <label className="publish-consent">
                 <input name="publish-consent" type="checkbox" required />
                 <span>
-                  Saya setuju nama dan komentar ini ditampilkan secara publik.
+                  Saya setuju komentar ini ditampilkan secara publik.
                 </span>
               </label>
               <label className="publish-consent">
