@@ -58,7 +58,7 @@ Jika baru menambahkan atau mengubah `DATABASE_URL`, buat **Redeploy** agar Funct
 
 ## Lokasi pengunjung (opsional)
 
-Persetujuan berbagi lokasi tersedia sebagai checkbox opsional pada formulir komentar. Jika dicentang, prompt izin bawaan browser muncul saat komentar dikirim. Komentar tetap dikirim jika pengunjung menolak izin; lokasi tidak dikirim. Browser hanya mengizinkan geolocation pada HTTPS atau `localhost`; bila izin pernah diblokir sebelumnya, ubah izin lokasi situs dari pengaturan browser. Setelah izin diberikan, koordinat disimpan pada kolom `NUMERIC` tanpa pembatasan jumlah angka desimal dan backend tidak membulatkannya. Presisi lokasi sebenarnya tetap bergantung pada perangkat dan browser. IP dan user-agent tidak disimpan oleh endpoint ini.
+Persetujuan berbagi lokasi wajib dicentang pada formulir komentar. Saat formulir dikirim, prompt izin bawaan browser muncul. Komentar baru dikirim setelah backend berhasil menyimpan lokasi; jika pengunjung menolak izin atau lokasi gagal disimpan, komentar tidak disimpan. Browser hanya mengizinkan geolocation pada HTTPS atau `localhost`; bila izin pernah diblokir sebelumnya, ubah izin lokasi situs dari pengaturan browser. Setelah izin diberikan, koordinat disimpan pada kolom `NUMERIC` tanpa pembatasan jumlah angka desimal dan backend tidak membulatkannya. Presisi lokasi sebenarnya tetap bergantung pada perangkat dan browser. IP dan user-agent tidak disimpan oleh endpoint ini.
 
 Jalankan kembali `database/schema.sql` pada Neon SQL Editor untuk membuat tabel lokasi. Hapus baris lama sesuai kebijakan retensi dan kebutuhan privasi situs Anda.
 

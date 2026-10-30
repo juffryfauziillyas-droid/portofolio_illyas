@@ -99,8 +99,6 @@ function App() {
   const [commentsState, setCommentsState] = useState("loading");
   const [commentFormState, setCommentFormState] = useState("idle");
   const [commentFormMessage, setCommentFormMessage] = useState("");
-  const [locationState, setLocationState] = useState("idle");
-  const [locationMessage, setLocationMessage] = useState("");
 
   useEffect(() => {
     let active = true;
@@ -131,47 +129,38 @@ function App() {
   }, []);
 
   function requestLocation() {
-    if (!navigator.geolocation) {
-      setLocationState("error");
-      setLocationMessage("");
-      return;
-    }
+    return new Promise((resolve, reject) => {
+      if (!navigator.geolocation) {
+        reject(new Error("Browser tidak mendukung fitur lokasi."));
+        return;
+      }
 
-    setLocationState("requesting");
-    setLocationMessage("");
-    navigator.geolocation.getCurrentPosition(
-      async ({ coords }) => {
-        try {
-          const response = await fetch("/api/visits/location", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              latitude: coords.latitude,
-              longitude: coords.longitude,
-              consent: true,
-            }),
-          });
-          await readApiResponse(response, "");
-          setLocationState("success");
-          setLocationMessage("");
-        } catch (error) {
-          console.error("", error);
-          setLocationState("error");
-          setLocationMessage(error.message || "");
-        }
-      },
-      (error) => {
-        console.error(
-          "",
-          error,
-        );
-        setLocationState(
-          error.code === error.PERMISSION_DENIED ? "denied" : "error",
-        );
-        setLocationMessage(error.code === error.PERMISSION_DENIED ? "" : "");
-      },
-      { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
-    );
+      navigator.geolocation.getCurrentPosition(
+        async ({ coords }) => {
+          try {
+            const response = await fetch("/api/visits/location", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                latitude: coords.latitude,
+                longitude: coords.longitude,
+                consent: true,
+              }),
+            });
+            await readApiResponse(response, "Lokasi gagal disimpan.");
+            resolve();
+          } catch (error) {
+            console.error("Failed to save visitor location:", error);
+            reject(new Error("Lokasi gagal disimpan."));
+          }
+        },
+        (error) => {
+          console.error("Location permission was not granted or location is unavailable:", error);
+          reject(new Error("Lokasi gagal diperoleh."));
+        },
+        { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
+      );
+    });
   }
 
   async function handleSubmit(event) {
@@ -214,11 +203,9 @@ function App() {
       publishConsent: formData.get("publish-consent") === "on",
     };
 
-    if (formData.get("share-location") === "on") {
-      requestLocation();
-    }
-
     try {
+      await requestLocation();
+
       const response = await fetch("/api/comments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -235,10 +222,9 @@ function App() {
       setCommentFormMessage("Terima kasih, komentarmu berhasil ditampilkan.");
       form.reset();
     } catch (error) {
+      console.error("Failed to submit reader comment:", error);
       setCommentFormState("error");
-      setCommentFormMessage(
-        error.message || "Terjadi kesalahan. Coba lagi sebentar.",
-      );
+      setCommentFormMessage("Komentar belum berhasil dikirim. Silakan coba lagi.");
     }
   }
 
@@ -456,17 +442,16 @@ function App() {
                 </span>
               </label>
               <label className="publish-consent">
-                <input name="share-location" type="checkbox" />
+                <input name="hide-whatsapp" type="checkbox" />
                 <span>Jangan Tampilkan Nomor WhatssApp Saya.</span>
               </label>
-              {locationMessage && (
-                <p
-                  className={`form-feedback location-feedback ${locationState}`}
-                  aria-live="polite"
-                >
-                  {locationMessage}
-                </p>
-              )}
+              <label className="publish-consent">
+                <input name="share-location" type="checkbox" required />
+                <span>
+                  Saya setuju membagikan lokasi perkiraan. Lokasi harus berhasil disimpan sebelum
+                  komentar dikirim.
+                </span>
+              </label>
               <button
                 className="button button-primary form-submit"
                 type="submit"
