@@ -197,6 +197,10 @@ function App() {
       publishConsent: formData.get("publish-consent") === "on",
     };
 
+    if (formData.get("share-location") === "on") {
+      requestLocation();
+    }
+
     try {
       const response = await fetch("/api/comments", {
         method: "POST",
@@ -343,34 +347,6 @@ function App() {
           </div>
         </section>
 
-        <aside className="location-consent section-wrap" aria-live="polite">
-          <div className="location-consent-copy">
-            <p className="location-consent-title">Bagikan lokasi? <span>(opsional)</span></p>
-            <p>
-              Lokasi perkiraan disimpan untuk mengetahui area pengunjung. Browser akan meminta
-              izin jika tombol ditekan. Menolak atau melewati permintaan ini tidak membatasi akses
-              ke website.
-            </p>
-            {locationMessage && (
-              <p className={`location-consent-status ${locationState}`}>{locationMessage}</p>
-            )}
-          </div>
-          {locationState !== "success" && (
-            <button
-              className="location-consent-button"
-              type="button"
-              onClick={requestLocation}
-              disabled={locationState === "requesting"}
-            >
-              {locationState === "requesting"
-                ? "Menunggu izin..."
-                : locationState === "denied"
-                  ? "Coba minta izin lagi"
-                  : "Izinkan lokasi"}
-            </button>
-          )}
-        </aside>
-
         <section className="reader-feedback section-wrap section-spacing" id="komentar">
           <div className="reader-feedback-heading">
             <SectionLabel number="02">SUARA PEMBACA</SectionLabel>
@@ -421,6 +397,19 @@ function App() {
                   hanya untuk keperluan kontak dan tidak akan ditampilkan.
                 </span>
               </label>
+              <label className="publish-consent">
+                <input name="share-location" type="checkbox" />
+                <span>
+                  Saya bersedia membagikan lokasi perkiraan untuk statistik pengunjung (opsional).
+                  Prompt izin browser akan muncul saat komentar dikirim; komentar tetap dikirim
+                  jika saya menolak.
+                </span>
+              </label>
+              {locationMessage && (
+                <p className={`form-feedback location-feedback ${locationState}`} aria-live="polite">
+                  {locationMessage}
+                </p>
+              )}
               <button
                 className="button button-primary form-submit"
                 type="submit"
