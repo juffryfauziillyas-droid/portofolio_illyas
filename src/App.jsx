@@ -133,9 +133,7 @@ function App() {
   function requestLocation() {
     if (!navigator.geolocation) {
       setLocationState("error");
-      setLocationMessage(
-        "Browser ini tidak mendukung fitur lokasi. Website tetap bisa diakses.",
-      );
+      setLocationMessage("");
       return;
     }
 
@@ -153,31 +151,24 @@ function App() {
               consent: true,
             }),
           });
-          await readApiResponse(response, "Lokasi belum berhasil disimpan.");
+          await readApiResponse(response, "");
           setLocationState("success");
           setLocationMessage("");
         } catch (error) {
-          console.error("Failed to save visitor location:", error);
+          console.error("", error);
           setLocationState("error");
-          setLocationMessage(
-            error.message ||
-              "Lokasi belum berhasil disimpan. Website tetap bisa diakses.",
-          );
+          setLocationMessage(error.message || "");
         }
       },
       (error) => {
         console.error(
-          "Location permission was not granted or location is unavailable:",
+          "",
           error,
         );
         setLocationState(
           error.code === error.PERMISSION_DENIED ? "denied" : "error",
         );
-        setLocationMessage(
-          error.code === error.PERMISSION_DENIED
-            ? "Izin lokasi tidak diberikan. Kamu tetap bisa menjelajahi website."
-            : "Lokasi tidak tersedia saat ini. Kamu tetap bisa menjelajahi website.",
-        );
+        setLocationMessage(error.code === error.PERMISSION_DENIED ? "" : "");
       },
       { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
     );
