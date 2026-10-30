@@ -46,11 +46,22 @@ const projects = [
   },
 ];
 
-const skills = ["JavaScript", "React", "Node.js", "Tailwind CSS", "Motion", "PostgreSQL"];
+const skills = [
+  "JavaScript",
+  "React",
+  "Node.js",
+  "Tailwind CSS",
+  "Motion",
+  "PostgreSQL",
+];
 
 const reveal = {
   hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+  },
 };
 
 function SectionLabel({ number, children }) {
@@ -72,7 +83,9 @@ async function readApiResponse(response, fallbackMessage) {
   }
 
   if (!response.ok) {
-    throw new Error(result.error || `${fallbackMessage} (HTTP ${response.status})`);
+    throw new Error(
+      result.error || `${fallbackMessage} (HTTP ${response.status})`,
+    );
   }
 
   return result;
@@ -95,7 +108,10 @@ function App() {
     async function loadComments() {
       try {
         const response = await fetch("/api/comments");
-        const result = await readApiResponse(response, "Komentar belum berhasil dimuat.");
+        const result = await readApiResponse(
+          response,
+          "Komentar belum berhasil dimuat.",
+        );
         if (active) {
           setComments(result.comments);
           setCommentsState("loaded");
@@ -117,12 +133,14 @@ function App() {
   function requestLocation() {
     if (!navigator.geolocation) {
       setLocationState("error");
-      setLocationMessage("Browser ini tidak mendukung fitur lokasi. Website tetap bisa diakses.");
+      setLocationMessage(
+        "Browser ini tidak mendukung fitur lokasi. Website tetap bisa diakses.",
+      );
       return;
     }
 
     setLocationState("requesting");
-    setLocationMessage("Menunggu izin lokasi dari browser...");
+    setLocationMessage("");
     navigator.geolocation.getCurrentPosition(
       async ({ coords }) => {
         try {
@@ -141,12 +159,20 @@ function App() {
         } catch (error) {
           console.error("Failed to save visitor location:", error);
           setLocationState("error");
-          setLocationMessage(error.message || "Lokasi belum berhasil disimpan. Website tetap bisa diakses.");
+          setLocationMessage(
+            error.message ||
+              "Lokasi belum berhasil disimpan. Website tetap bisa diakses.",
+          );
         }
       },
       (error) => {
-        console.error("Location permission was not granted or location is unavailable:", error);
-        setLocationState(error.code === error.PERMISSION_DENIED ? "denied" : "error");
+        console.error(
+          "Location permission was not granted or location is unavailable:",
+          error,
+        );
+        setLocationState(
+          error.code === error.PERMISSION_DENIED ? "denied" : "error",
+        );
         setLocationMessage(
           error.code === error.PERMISSION_DENIED
             ? "Izin lokasi tidak diberikan. Kamu tetap bisa menjelajahi website."
@@ -207,7 +233,10 @@ function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const result = await readApiResponse(response, "Komentar belum berhasil dikirim.");
+      const result = await readApiResponse(
+        response,
+        "Komentar belum berhasil dikirim.",
+      );
 
       setComments((current) => [result.comment, ...current].slice(0, 50));
       setCommentsState("loaded");
@@ -216,7 +245,9 @@ function App() {
       form.reset();
     } catch (error) {
       setCommentFormState("error");
-      setCommentFormMessage(error.message || "Terjadi kesalahan. Coba lagi sebentar.");
+      setCommentFormMessage(
+        error.message || "Terjadi kesalahan. Coba lagi sebentar.",
+      );
     }
   }
 
@@ -435,9 +466,7 @@ function App() {
               </label>
               <label className="publish-consent">
                 <input name="share-location" type="checkbox" />
-                <span>
-                  Jangan Tampilkan Nomor WhatssApp Saya.
-                </span>
+                <span>Jangan Tampilkan Nomor WhatssApp Saya.</span>
               </label>
               {locationMessage && (
                 <p
