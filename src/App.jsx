@@ -448,8 +448,7 @@ function App() {
               <label className="publish-consent">
                 <input name="share-location" type="checkbox" required />
                 <span>
-                  Saya setuju membagikan lokasi perkiraan. Lokasi harus berhasil disimpan sebelum
-                  komentar dikirim.
+                  Sembunyikan Nama saya (anonymus)
                 </span>
               </label>
               <button
