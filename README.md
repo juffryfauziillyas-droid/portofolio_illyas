@@ -25,7 +25,7 @@ Untuk memeriksa koneksi API dan Neon, buka `http://localhost:3001/api/health`. R
 
 ## Deploy ke Vercel melalui GitHub
 
-Proyek ini sudah menyiapkan `api/[...path].js` sebagai Vercel Function untuk meneruskan endpoint API Express; Vite membangun frontend ke folder `dist`.
+Proyek ini menyiapkan `api/[...path].js` untuk endpoint API umum dan `api/visits/location.js` khusus untuk route lokasi bertingkat yang tidak tertangani oleh catch-all pada semua deployment; Vite membangun frontend ke folder `dist`.
 
 1. Pastikan `.env` tidak akan ikut terunggah. File ini sudah tercantum di `.gitignore`; jangan pernah menambahkan atau menempelkan `DATABASE_URL` ke kode, README, atau GitHub.
 2. Buat repository baru di GitHub. Jika repository kosong, dari terminal PowerShell pada folder proyek jalankan:

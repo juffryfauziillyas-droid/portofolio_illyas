@@ -127,7 +127,12 @@ app.post("/api/comments", async (request, response) => {
   }
 });
 
-app.post("/api/visits/location", async (request, response) => {
+export async function saveVisitorLocation(request, response) {
+  if (request.method !== "POST") {
+    response.setHeader("Allow", "POST");
+    return response.status(405).json({ error: "Metode tidak diizinkan." });
+  }
+
   if (!sql) {
     return response.status(503).json({ error: "Database belum dikonfigurasi." });
   }
@@ -157,6 +162,8 @@ app.post("/api/visits/location", async (request, response) => {
     console.error("Failed to save visitor location:", error);
     return response.status(500).json({ error: "Lokasi belum berhasil disimpan." });
   }
-});
+}
+
+app.post("/api/visits/location", saveVisitorLocation);
 
 export default app;
